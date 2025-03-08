@@ -13,34 +13,79 @@ public class ArrayPractice {
             arr[i] = Integer.parseInt(sc.nextLine());
         }
 
-        // 2. Nhập giá trị và chỉ số cần chèn
-        System.out.println("Nhập vào giá trị phần tử cần chèn:");
-        int value = Integer.parseInt(sc.nextLine());
-        System.out.println("Nhập vào chỉ số phần tử cần chèn:");
-        int index = Integer.parseInt(sc.nextLine());
+        while (true) {
+            System.out.println("\nChọn thao tác:");
+            System.out.println("1. Chèn phần tử");
+            System.out.println("2. Sửa phần tử");
+            System.out.println("3. Xóa phần tử");
+            System.out.println("4. Thoát");
+            System.out.print("Nhập lựa chọn: ");
+            int choice = Integer.parseInt(sc.nextLine());
 
-        // 3. Kiểm tra chỉ số hợp lệ
-        if (index < 0) {
-            System.err.println("Chỉ số không hợp lệ: " + index);
-            return;
+            if (choice == 1) { // Chèn phần tử
+                System.out.println("Nhập giá trị cần chèn:");
+                int value = Integer.parseInt(sc.nextLine());
+                System.out.println("Nhập vị trí cần chèn:");
+                int index = Integer.parseInt(sc.nextLine());
+
+                if (index < 0 || index > arr.length) {
+                    System.err.println("Chỉ số không hợp lệ.");
+                    continue;
+                }
+
+                int[] newArr = new int[arr.length + 1];
+                for (int i = 0, j = 0; i < newArr.length; i++) {
+                    if (i == index) {
+                        newArr[i] = value;
+                    } else {
+                        newArr[i] = arr[j++];
+                    }
+                }
+                arr = newArr;
+
+            } else if (choice == 2) { // Sửa phần tử
+                System.out.println("Nhập vào vị trí cần sửa:");
+                int index = Integer.parseInt(sc.nextLine());
+
+                if (index < 0 || index >= arr.length) {
+                    System.err.println("Chỉ số không hợp lệ!");
+                    continue;
+                }
+
+                System.out.println("Nhập vào giá trị mới:");
+                arr[index] = Integer.parseInt(sc.nextLine());
+
+            } else if (choice == 3) { // Xóa phần tử
+                System.out.println("Nhập vào chỉ số phần tử cần xóa:");
+                int index = Integer.parseInt(sc.nextLine());
+
+                if (index < 0 || index >= arr.length) {
+                    System.err.println("Chỉ số không hợp lệ!");
+                    continue;
+                }
+
+                int[] newArr = new int[arr.length - 1];
+                int j = 0;
+                for (int i = 0; i < arr.length; i++) {
+                    if (i != index) {
+                        newArr[j++] = arr[i];
+                    }
+                }
+                arr = newArr;
+
+            } else if (choice == 4) {
+                System.out.println("Thoát chương trình.");
+                break;
+            } else {
+                System.out.println("Lựa chọn không hợp lệ.");
+            }
+
+            System.out.print("Mảng sau khi cập nhật: ");
+            for (int num : arr) {
+                System.out.printf("%d ", num);
+            }
+            System.out.println();
         }
-
-        // 4. Khai báo mảng mới có kích thước đủ lớn để chứa phần tử mới
-        int newSize = Math.max(arr.length, index + 1); // Đảm bảo mảng đủ lớn để chứa chỉ số mới
-        int[] newArray = new int[newSize];
-
-        // 5. Sao chép các phần tử từ mảng cũ sang mảng mới
-        for (int i = 0; i < arr.length; i++) {
-            newArray[i] = arr[i];
-        }
-
-        // 6. Gán giá trị tại vị trí chỉ định
-        newArray[index] = value;
-
-        // 7. In ra mảng sau khi chèn
-        System.out.print("Mảng sau khi chèn: ");
-        for (int num : newArray) {
-            System.out.printf("%d ", num);
-        }
+        sc.close();
     }
 }
